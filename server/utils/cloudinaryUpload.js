@@ -1,0 +1,21 @@
+import cloudinary from "../config/cloudinary.js";
+
+const uploadBuffer = (buffer, folder) =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream({ folder, resource_type: "image" }, (error, result) => {
+      if (error) return reject(error);
+      resolve({ url: result.secure_url, publicId: result.public_id });
+    });
+
+    stream.end(buffer);
+  });
+
+export const uploadImages = async (files = [], folder = "artisan-market") => {
+  if (!files.length) return [];
+  return Promise.all(files.map((file) => uploadBuffer(file.buffer, folder)));
+};
+
+export const deleteImage = async (publicId) => {
+  if (!publicId) return;
+  await cloudinary.uploader.destroy(publicId);
+};
