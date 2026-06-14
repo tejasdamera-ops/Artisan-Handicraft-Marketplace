@@ -30,16 +30,6 @@ const OrderDetail = () => {
     }
   };
 
-  const markPaid = async () => {
-    try {
-      const { data } = await api.post("/payments/verify", { orderId: id, provider: "manual" });
-      setOrder(data);
-      toast.success("Payment marked paid");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Could not verify payment");
-    }
-  };
-
   if (loading) return <Spinner />;
   if (!order) return <p className="section">Order not found.</p>;
 
@@ -70,7 +60,6 @@ const OrderDetail = () => {
           <p className="mt-2 text-sm text-stone-600">{order.address?.line1}, {order.address?.city}, {order.address?.country}</p>
           <h2 className="mt-5 font-black">Payment</h2>
           <p className="mt-2 text-sm text-stone-600">{order.paymentStatus} via {order.paymentProvider}</p>
-          {order.paymentStatus !== "Paid" && <button className="btn-secondary mt-4 w-full" onClick={markPaid}>Mark payment paid</button>}
           {order.status === "Placed" && <button className="btn-secondary mt-3 w-full" onClick={cancel}>Cancel order</button>}
         </aside>
       </div>

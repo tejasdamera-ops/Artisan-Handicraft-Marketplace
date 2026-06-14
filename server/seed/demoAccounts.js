@@ -11,6 +11,25 @@ const placeholder = (name) => ({
   publicId: ""
 });
 
+const productImages = {
+  bowl: {
+    url: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&q=80",
+    publicId: ""
+  },
+  tealight: {
+    url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=900&q=80",
+    publicId: ""
+  },
+  runner: {
+    url: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=900&q=80",
+    publicId: ""
+  },
+  scarf: {
+    url: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=900&q=80",
+    publicId: ""
+  }
+};
+
 const upsertUser = async (email, data) => {
   let user = await User.findOne({ email }).select("+password");
 
@@ -98,7 +117,7 @@ const createDemoAccounts = async () => {
       artisanId: artisanA._id,
       isApproved: true,
       approvalStatus: "approved",
-      images: [placeholder("bowl")],
+      images: [productImages.bowl],
       ratings: { average: 4.8, count: 12 }
     }),
     upsertProduct("Terracotta Tea Light Set", {
@@ -111,7 +130,7 @@ const createDemoAccounts = async () => {
       artisanId: artisanA._id,
       isApproved: true,
       approvalStatus: "approved",
-      images: [placeholder("tealight")],
+      images: [productImages.tealight],
       ratings: { average: 4.5, count: 7 }
     }),
     upsertProduct("Block Printed Cotton Table Runner", {
@@ -124,7 +143,7 @@ const createDemoAccounts = async () => {
       artisanId: artisanB._id,
       isApproved: true,
       approvalStatus: "approved",
-      images: [placeholder("runner")],
+      images: [productImages.runner],
       ratings: { average: 4.6, count: 9 }
     }),
     upsertProduct("Indigo Handwoven Cotton Scarf", {
@@ -137,7 +156,7 @@ const createDemoAccounts = async () => {
       artisanId: artisanB._id,
       isApproved: true,
       approvalStatus: "approved",
-      images: [placeholder("indigo-scarf")],
+      images: [productImages.scarf],
       ratings: { average: 4.7, count: 11 }
     })
   ]);
