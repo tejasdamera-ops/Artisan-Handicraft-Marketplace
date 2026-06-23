@@ -51,6 +51,8 @@ const Orders = () => {
         </div>
         {orders.map((order) => {
           const artisans = getOrderArtisans(order);
+          const buyerId = order.buyerId?._id || order.buyerId;
+          const buyerName = order.buyerId?.name || "Buyer";
 
           return (
             <div key={order._id} className="grid min-w-[860px] grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr_auto] gap-4 border-b border-stone-100 p-4 text-sm last:border-0">
@@ -59,7 +61,12 @@ const Orders = () => {
               <span><span className={`rounded-md px-2 py-1 ${orderStatusClass(order.status)}`}>{order.status}</span></span>
               <span>{order.paymentStatus}</span>
               <span className="flex flex-wrap gap-2">
-                {user?.role === "buyer" && artisans.length ? (
+                {user?.role === "artisan" && buyerId ? (
+                  <Link className="btn-secondary px-3 py-1.5 text-xs" to={`/chat?user=${buyerId}`}>
+                    <MessageCircle className="h-3.5 w-3.5" />
+                    Chat with {buyerName}
+                  </Link>
+                ) : user?.role === "buyer" && artisans.length ? (
                   artisans.map((artisan) => (
                     <Link key={artisan.id} className="btn-secondary px-3 py-1.5 text-xs" to={`/chat?user=${artisan.id}`}>
                       <MessageCircle className="h-3.5 w-3.5" />
